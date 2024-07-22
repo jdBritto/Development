@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación de Costos</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />   
+    <link rel="stylesheet" href="/node_modules/datatables.net-bs5/css/dataTables.bootstrap5.css" />
+    <!-- <link rel="stylesheet" href="./src/css/format.css"> -->
+    <link href="./dist/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="./src/css/normalize.css">
+</head>
+<body>
+    <header class="md:box-content">
+        <h1>Aplicación de Costos</h1>
+    </header>
+    <main class="container mx-auto px-4">
+        <section class="shadow-2xl rounded-md" id="propios">
+            <h2>Productos Propios</h2>
+            <table class="table table-striped table-bordered" id="productos-propios">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all">All</th>
+                        <th>Producto</th>
+                        <th>Cliente</th>
+                        <th>Precio</th>
+                        <th>Costo Total</th>
+                        <th>Costo HFV</th>
+                        <th>Cmg $</th>
+                        <th>Cmg %</th>
+                        <th>Responsable Pricing (Email)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Datos cargados aquí -->
+                </tbody>
+            </table>
+            <div class="flex flex-wrap justify-center space-x-4">
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto" id="agregar-registro-propios">Agregar Registro</button>
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto" id="eliminar-registro-propios">Eliminar Registro</button>
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto" id="importar-propios">Importar Excel</button>
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto" id="exportar-propios">Exportar Excel</button>
+                <span class="fade" id="cargar-excel"></span>
+            </div>
+        </section>
+        <section class="shadow-2xl rounded-md" id="competencia">
+            <h2>Productos Competencia</h2>
+            <table id="productos-competencia">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all">All</th>
+                        <th>Laboratorio</th>
+                        <th>Producto</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Precio</th>
+                        <th>Indicador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Datos cargados aquí -->
+                </tbody>
+            </table>
+            <div class="flex flex-wrap justify-center space-x-4">
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto" id="agregar-registro-competencia">Agregar Registro</button>
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto" id="eliminar-registro-competencia">Eliminar Registro</button>
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto" id="importar-competencia">Importar Excel</button>
+                <button class="inline-flex w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto" id="exportar-competencia">Exportar Excel</button> 
+                <span class="fade" id="cargar-excel"></span>
+            </div>
+        </section>
+    </main>
+
+    <div class="flex flex-wrap request-approval container">
+        <button class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto" id="solicitar-aprobacion">
+            Solicitar Aprobación
+        </button>
+    </div>  
+    <!-- Input para seleccionar archivo Excel -->
+    <input type="file" id="file-input" accept=".xlsx" style="display:none;">
+
+    <!-- Modal para mostrar el contenido del archivo Excel -->
+    <div id="modal" class="modal fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" tabindex="-1">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="modal-content">
+                <button type="button" class="close btn-close"></button>
+                <h2 class="modal-header">Costos HFV Competencia</h2>
+                <table class="table table-striped table-bordered" id="excel-content"></table>
+                <button class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 sm:ml-3 sm:w-auto" id="volver">Volver</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="/src/js/app.js"></script>
+    <script type="module" src="/src/js/xlsx.full.min.js"></script>
+    <script src="/src/js/scripts.js"></script>
+    <script defer src="/src/js/scripts.js"></script>
+    <!-- <script type="module" src="/node_modules/datatables.net-bs5/js/dataTables.bootstrap5.js"></script> -->
+    <script type="module" src="/node_modules/datatables.net/js/dataTables.js"></script>
+</body>
+</html>
